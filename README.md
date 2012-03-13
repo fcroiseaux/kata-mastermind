@@ -2,11 +2,9 @@
 
 ### Build & test
 Une fois le projet cloné, lancer sbt
-
 ```sbt```
 
 Dans la console SBT, pour lancer les test unitaires :
-
 ```test```
 
 La commande va lancer une série de test sur l'application.
