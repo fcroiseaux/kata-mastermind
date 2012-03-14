@@ -18,7 +18,7 @@ class MasterMind(private val secret:List[String], val values:List[String]) {
     assert(proposition.size == secret.size)
     val (placed,incorrect)=proposition.zip(secret).partition(v=>v._1.equals(v._2))
     val rest=incorrect.map(_._2)
-    (placed.size,incorrect.count(v=>rest.exists(_.equals(v._1))))
+    (placed.size,incorrect.count(v=>rest.contains(v._1)))
   }
 
   // Retourne le nombre total de possibilités pour ce mastermind
