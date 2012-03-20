@@ -25,7 +25,7 @@ class Worker(val mastermind:MasterMind) extends Actor {
   def receive = {
     case Work(start, nb, replyTo) =>
       for(index <- (0 until nb)){
-        val prop=generator.propositionAt(index+start)
+        val prop=mastermind.propositionAt(index+start)
         if(mastermind.check(prop)==(mastermind.secretLen,0))
           replyTo ! Found(prop)
       }
@@ -46,7 +46,10 @@ class AkkaMaster(val mastermind:MasterMind, val nbWorkers:Int) extends Actor{
 
 class AkkaSolver(val mastermind:MasterMind, val nbWorkers:Int) extends Solver {
   val system = ActorSystem("MasterMindSystem")
-  def solve={
+
+  def propose(prop : List[String]) = true
+
+  override def solve={
     val master=system.actorOf(Props(new AkkaMaster(mastermind,nbWorkers)),name = "master")
     implicit val timeout = Timeout(300 seconds)
     val future=Await.result(master ? Solve,timeout.duration).asInstanceOf[Found]

@@ -38,15 +38,23 @@ class MastermindTest extends Specification {
     }
   }
 
-  "BruteSolver app " should {
+  "Solver app " should {
 
-    "solve mastermind" in {
-      val masterMind=new MasterMind(List("A","A","C"),List("A","B","C","D","E","F","G"))
+    "brute solve mastermind" in {
+      val secret = List("A","C","B", "A")
+      val masterMind=new MasterMind(secret ,List("A","B","C","D","E","F","G"))
       val solution=new BruteSolver(masterMind).solve
       solution must beSome
-      solution.get must equalTo(List("A","A","C"))
+      solution.get must equalTo(secret)
     }
 
+    "wise solve mastermind" in {
+      val secret = List("A","C","B", "A")
+      val masterMind=new MasterMind(secret,List("A","B","C","D","E","F","G"))
+      val solution=new WiseSolver(masterMind).solve
+      solution must beSome
+      solution.get must equalTo(secret)
+    }
   }
 
 }
